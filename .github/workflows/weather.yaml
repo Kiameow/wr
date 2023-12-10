@@ -5,27 +5,29 @@ on:
   schedule:
     - cron: '30 * * * *'
 
-runs-on: ubuntu-latest
-steps:
-  - name: 'Checkout codes'
-    uses: actions/checkout@v4
+jobs:
+  weather-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout codes'
+        uses: actions/checkout@v4
 
-  - name: 'Get weather report'
-    run: bash ./weather.sh
+      - name: 'Get weather report'
+        run: bash ./weather.sh
 
-  - name: Send mail
-    uses: dawidd6/action-send-mail@v3
-    with:
-      server_address: smtp.163.com
-      server_port: 465
-      secure: true
-      username: ${{ secrets.MAIL_USERNAME }}
-      password: ${{ secrets.MAIL_PASSWORD }}
-      subject: 杭州天气预报
-      to: 2843540040@qq.com
-      from: weather-robot
-      body: 你好，最近的杭州天气状况如下
-      html_body: file://weather_result.html
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.163.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: 杭州天气预报
+          to: 2843540040@qq.com
+          from: weather-robot
+          body: 你好，最近的杭州天气状况如下
+          html_body: file://weather_result.html
 
 
 
