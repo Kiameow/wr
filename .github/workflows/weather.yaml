@@ -20,7 +20,7 @@ jobs:
 
       - name: 'Extract email from issue title'
         id: extract-email
-        run: echo "email=$(echo "${{ github.event.issue.title }}" | grep -E -o "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")" >> "$GITHUB_ENV"
+        run: echo "email=$(echo "${{ github.event.issue.title }}" | grep -E -o "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")" >> "$GITHUB_OUTPUT"
 
       - name: 'Send mail'
         uses: dawidd6/action-send-mail@v3
