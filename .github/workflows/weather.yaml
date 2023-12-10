@@ -22,11 +22,6 @@ jobs:
         id: extract-email
         run: echo "email=$(echo "${{ github.event.issue.title }}" | grep -E -o "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")" >> "$GITHUB_ENV"
 
-      - name: Use the value
-        id: step_two
-        run: |
-          printf '%s\n' "$email" # This will output 'email_address'
-
       - name: 'Send mail'
         uses: dawidd6/action-send-mail@v3
         with:
@@ -36,7 +31,7 @@ jobs:
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: 杭州天气预报
-          to: ${{ email }}
+          to: ${{ steps.extract-email.outputs.email }}
           from: weather-robot
           body: 你好，最近的杭州天气状况如下
           html_body: file://weather_result.html
